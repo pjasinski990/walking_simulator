@@ -1,0 +1,9 @@
+# generic
+doc
+build
+*.swp
+
+# jetbrains
+.idea
+cmake-build-debug
+cmake-build-release
