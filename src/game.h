@@ -20,8 +20,8 @@ public:
 
 private:
     Game();
-    void handle_keys(float dt);
-    bool is_player_on_the_ground();
+    void handle_keys();
+    bool is_player_on_the_ground(Player &p);
 
     const uint32_t _window_width;
     const uint32_t _window_height;
@@ -40,9 +40,9 @@ private:
     GameLoop _loop;
 
     static constexpr float _objects_generation_range = 50.0f;
-    static constexpr float _world_size = 50.0f;
-    static const uint32_t _tree1_count = 10u;
-    static const uint32_t _tree2_count = 10u;
+    static constexpr float _world_size = 30.0f;
+    static const uint32_t _tree1_count = 20u;
+    static const uint32_t _tree2_count = 20u;
     static const uint32_t _tps = 128u;
 
     static Game *_instance;

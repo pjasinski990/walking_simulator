@@ -1,19 +1,29 @@
 #pragma once
 
+#include <map>
+
 #include <mrld/mrld.h>
 
 class Player
 {
 public:
+    enum class MoveDirection {
+        FORWARD = 0b1000,
+        BACKWARD = 0b0100,
+        LEFT = 0b0010,
+        RIGHT = 0b0001
+    };
+
     Player(mrld::Window *window);
 
     inline mrld::RigidBody *get_player_object() { return &_player_object; }
 
-    void update();
-    void move_left(float dt);
-    void move_right(float dt);
-    void move_forward(float dt);
-    void move_backward(float dt);
+    void update(float dt_f);
+    void move_forward();
+    void move_backward();
+    void move_left();
+    void move_right();
+    void jump();
 
     inline mrld::FPSCamera *get_camera() { return &_camera; }
     inline float get_height() const { return _player_height; }
@@ -23,7 +33,6 @@ private:
     const mrld::vec3 _starting_look_target;
 
     const float _speed;
-    const float _jump_height;
     const float _z_near;
     const float _z_far;
     const float _fov;
@@ -31,4 +40,8 @@ private:
     mrld::SphereCollider _player_collider;
     mrld::RigidBody _player_object;
     mrld::FPSCamera _camera;
+
+    const float _jump_height = 3.0f;
+    const float _speed_damping_factor = 80000.0f;
+    uint32_t _move_direction = 0u;
 };

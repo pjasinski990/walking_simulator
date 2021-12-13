@@ -75,6 +75,10 @@ void main()
         }
         f_color += vec4(res, 0.0f);
     }
+    if (v_material_slot >= 0.0f) {
+        uint m_slot = uint(v_material_slot + 0.5f);
+        f_color.w = materials[m_slot].dissolve;
+    }
 }
 
 vec3 calc_directional_light(DirectionalLight light, vec3 normal, vec3 view_direction, Material material) {

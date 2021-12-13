@@ -12,10 +12,10 @@ World::World(mrld::Camera *cam)
     _world_layer = mrld::Layer(&_shader, &_renderer, _camera);
 
     mrld::directional_light light;
-    light.direction = mrld::vec3(1.0f, -1.0f, 0.0f);
+    light.direction = mrld::vec3(1.0f, -1.0f, -1.0f);
     light.specular = mrld::vec3(1.0f, 1.0f, 1.0f);
-    light.diffuse = mrld::vec3(1.0f, 1.0f, 1.0f) * 0.7f;
-    light.ambient = mrld::vec3(1.0f, 1.0f, 1.0f) * 0.1f;
+    light.diffuse = mrld::vec3(1.0f, 1.0f, 1.0f);
+    light.ambient = mrld::vec3(0.7f, 1.0f, 0.7f) * 0.1f;
     _shader.set_directional_light(light);
 }
 
