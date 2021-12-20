@@ -6,7 +6,7 @@
 
 class GameLoop
 {
-    typedef uint64_t (*step_callback)(uint64_t dt_micros, uint64_t accumulator);
+    typedef void (*step_callback)(uint64_t dt_micros, uint64_t accumulator);
 public:
     GameLoop(uint32_t tps, step_callback cb);
     void start();

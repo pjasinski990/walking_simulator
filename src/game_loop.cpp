@@ -20,16 +20,19 @@ void GameLoop::start()
     uint64_t fps_timer = 0u;
     uint32_t fps = 0;
 
+    // accumulator is assumed to be used to advance physics
+    // by maximum possible amount of time steps every frame
     while (_running) {
         uint64_t new_time = _timer.get_elapsed_micros();
         uint64_t frame_time = new_time - current_time;
         current_time = new_time;
         accumulator += frame_time;
-        accumulator = _callback(_dt, accumulator);
+
+        _callback(_dt, accumulator);
+        accumulator %= _dt;
 
         if (_timer.get_elapsed_millis() - fps_timer > 1000u) {
             fps_timer = _timer.get_elapsed_millis();
-            std::cout << fps << std::endl;
             _last_fps = fps;
             fps = 0;
         }

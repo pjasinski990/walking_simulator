@@ -4,7 +4,7 @@ Player::Player(mrld::Window *window)
         : _player_height{2.0f}
         , _starting_position{mrld::vec3(0.0f, _player_height, 1.0f)}
         , _starting_look_target{mrld::vec3(0.0f, _player_height, 0.0f)}
-        , _speed{100.0f}
+        , _speed{80.0f}
         , _z_near{0.1f}
         , _z_far{500.0f}
         , _fov{45.0f}
@@ -40,8 +40,8 @@ void Player::update(float dt_f)
         }
         if (res.magnitude_squared() > 1e-4f) {
             _player_object.phys_properties.velocity += res.normalized() * _speed * dt_f;
-            _move_direction = 0u;
         }
+        _move_direction = 0u;
     }
 
     float y = props.acceleration.y;
@@ -49,6 +49,7 @@ void Player::update(float dt_f)
     // damp only horizontal velocity
     props.acceleration.y = y;
     _camera.set_position(_player_object.t.position);
+    _camera.update();
 }
 
 void Player::move_forward()
@@ -75,3 +76,17 @@ void Player::jump()
     _player_object.phys_properties.velocity.y = _jump_height;
 }
 
+void Player::push_object(mrld::Body *object, float current_distance)
+{
+    if (current_distance < _player_reach_distance) {
+        mrld::vec3 push_direction = (get_camera()->get_direction() + mrld::vec3(0.0f, 1.0f, 0.0f)).normalized();
+        object->phys_properties.acceleration += push_direction * _push_strength;
+    }
+}
+
+void Player::pull_object(mrld::Body *object, float current_distance)
+{
+    if (current_distance < _player_reach_distance) {
+        object->phys_properties.acceleration -= get_camera()->get_direction() * _pull_strength;
+    }
+}

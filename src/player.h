@@ -24,6 +24,8 @@ public:
     void move_left();
     void move_right();
     void jump();
+    void push_object(mrld::Body *object, float current_distance);
+    void pull_object(mrld::Body *object, float current_distance);
 
     inline mrld::FPSCamera *get_camera() { return &_camera; }
     inline float get_height() const { return _player_height; }
@@ -41,7 +43,10 @@ private:
     mrld::RigidBody _player_object;
     mrld::FPSCamera _camera;
 
-    const float _jump_height = 3.0f;
-    const float _speed_damping_factor = 80000.0f;
     uint32_t _move_direction = 0u;
+    const float _jump_height = 4.0f;
+    const float _speed_damping_factor = 80000.0f;
+    const float _player_reach_distance = 3.0f;
+    const float _push_strength = 500.0f;
+    const float _pull_strength = 500.0f;
 };
